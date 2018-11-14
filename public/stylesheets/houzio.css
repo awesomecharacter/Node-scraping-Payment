@@ -1,0 +1,275 @@
+#nav{
+    
+    background-color: white;
+    font-family: comfortaa;
+}
+
+#canvas{
+    
+    width: 400px;
+    margin: auto;
+}
+
+#left-div{
+    
+    padding-left: 5%;
+    
+}
+
+#priceBox{
+    background-color: #cecece;
+    border-radius: 5px;
+    height: 100px;
+    margin-bottom: 20px;
+    
+}
+
+#alertDiv{
+     background-color: #fafafa;
+    border: 2px solid indianred;
+    border-radius: 5px;
+    height: 100px;
+    margin-bottom: 20px; 
+    padding-top: 2%;
+    
+}
+
+#scoresSection{
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 50px;
+
+}
+
+#line{
+    width: 95%;
+    border: .5px solid dodgerblue;
+    margin: auto;
+    margin-bottom: 20px;
+    
+}
+#left-div-1{
+    
+    padding-left: 15%;
+    padding-top: 5%;
+    
+}
+#right-div{
+    
+    padding-left: 5%;
+     padding-top: 5%;
+}
+#payment-div{
+    
+    border: 2px solid dodgerblue;
+    border-radius: 7px;
+    width: 400px;
+        height:470px;
+    padding-left: 15px;
+}
+
+#summary-table{
+    font-size: 14px;
+    line-height: 23px;
+    padding: 7px;
+    
+    
+}
+
+#ccInput{
+    width: 300px;
+    
+}
+
+#paymentButton{
+    
+    margin: auto;
+    margin-bottom: 30px;
+    width: 350px;
+}
+
+#orderNumber{
+    width: 400px;
+    height: 45px;
+    font-size: 18px;
+    
+}
+
+#sellersEmail{
+    
+    height: 50px;
+    width: 300px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fafafa;
+    font-size: 17px;
+    max-width: 99%;
+}
+
+#requestDescription{
+    
+    background-color: #fafafa;
+    max-width: 600px;
+    padding: 3%;
+}
+
+#reportHeader{
+    font-family: comfortaa;
+    padding-top: 5%;
+    margin-bottom: 5%;
+    margin: 0px;
+    
+}
+
+#reportHeader2{
+    font-family: comfortaa;
+ 
+    font-size: 25px;
+    
+}
+
+#descriptionText{
+    max-width: 550px;
+    padding-top: 5%;
+    
+}
+#chartImage{
+    
+    max-width: 100%;
+    margin-bottom: 14%;
+}
+
+#uwAlerts{
+    max-width: 700px;
+    
+}
+
+#esignDiv{
+    border: 1px solid lightgray;
+    
+}
+
+#requestButton{
+    background-color: #834ed0;
+     border: 0px solid transparent;
+    
+}
+#questionText{
+    font-weight: 700;
+    font-family: comfortaa;
+    font-size: 19px;
+    line-height: 0px;
+    margin-bottom: -2px;
+    
+    
+}
+
+#centeredDiv{
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    padding-left: 2%;
+    padding-top: 5%;
+    
+    
+}
+
+#testDiv{
+    
+    height: 300px;
+    width: 600px;
+    box-shadow: 0px 0px 34px 2px grey;
+    border-radius: 9px;
+    max-width: 99%;
+    padding: 3%;
+    margin: auto;
+    
+}
+#testDiv2{
+    
+    height: 400px;
+    width: 600px;
+    box-shadow: 0px 0px 34px 2px grey;
+    border-radius: 9px;
+    max-width: 99%;
+    padding: 3%;
+    margin: auto;
+    
+}
+#cardIcon{
+    margin-bottom: 5%;
+    
+}
+
+#line{
+    
+    margin: auto;
+    width: 60%;
+    margin-bottom: 25px;
+    border: 1px solid #fafafa;
+}
+
+#introText{
+    padding-top: 10%;
+    font-size: 75px;
+    font-weight: 700;
+    font-family: comfortaa;
+}
+
+#address{
+    
+    width: 99%;
+    max-width: 650px;
+    height: 60px;
+    border-radius: 25px;
+    
+}
+
+#nav-logo{
+    margin-top: 5px;
+    
+}
+
+
+
+#homeNextBtn{
+    
+    width: 100px;
+  
+}
+
+
+
+
+
+
+#footer{
+  height: 150px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}    
+    
+  #footer2{
+  height: 150px;
+
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}    
+      
+#testZZ{
+    border: 3px solid red;
+    
+}    
+
+
+
+}

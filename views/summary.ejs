@@ -1,0 +1,136 @@
+<% include include/header %>
+<div class="row">
+    <div class="col-lg-6 col-md-6" id="left-div-1">
+        <table id="summary-table">
+            <tr>
+                <td><b>Address : </b></td>
+                <td> <%= address %><br></td>
+            </tr>
+            <tr>
+                <td><b>person 1: </b></td>
+                <td> <%= name%><br></td>
+            </tr>
+            <tr>
+                <td><b>person 2: </b></td>
+                <td> <%= name%><br></td>
+            </tr>
+            <tr>
+                <td><b>age of home: </b></td>
+                <td> <%= home_age%><br></td>
+            </tr>
+            <tr>
+                <td><b>alarm system: </b></td>
+                <td> <%= alarm_system%><br></td>
+            </tr>
+            <tr>
+                <td><b>age of roof: </b></td>
+                <td> <%= roofless%><br></td>
+            </tr>
+            <tr>
+                <td><b>type of roof : </b></td>
+                <td> <%= rooftype%><br></td>
+            </tr>
+            <tr>
+                <td><b> pool risk : </b></td>
+                <td> <%= havepool%><br></td>
+            </tr>
+            <tr>
+                <td><b>dog breed: </b></td>
+                <td> <%= dog%><br></td>
+            </tr>
+            <tr>
+                <td><b>credit score: </b></td>
+                <td> <%= basement%><br></td>
+            </tr>
+            <tr>
+                <td><b>bundle: </b></td>
+                <td> <%= bundlehome%><br></td>
+            </tr>
+            <tr>
+                <td><b>flood zone: </b></td>
+                <td> <%= flood%><br></td>
+            </tr>
+            <tr>
+                <td><b>settlement date: </b></td>
+                <td> <%= settlementdate%><br></td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-lg-6 col-md-6" id="right-div">
+        <form action="/checkout" method="post" id="payment-form">
+        <div id="payment-div">
+            <input type="hidden" value="2000" id="cc-amount" />
+            <img src="images/pay-options.png" width="300px"><br>
+            <br>
+            credit card number<br>
+            <input id="ccInput" type="number" name="ccNumber"> <br>
+            expiration date<br>
+            <input type="date" name="expDate" id="expDate"> <br>
+            cvc<br>
+            <input type="number" id="cvc" name="cvc"> <br><br>
+            <br><br>
+            report cost.............$25.00<br>
+            tax...........................6%<br>
+            <b>total cost...............$26.50</b><br><br><Br>
+            <center><button id="paymentButton" type="submit" class="btn btn-success btn-lg">Submit
+                    </button></center>
+        </div>
+        </form>
+        <div id="error" class="hidden"></div>
+    </div>
+</div>
+<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+<script>
+var publicStripeApiKey = 'pk_test_eEErfHtzInIYEr1vnUvhWfnQ';
+
+Stripe.setPublishableKey(publicStripeApiKey);
+
+function stripeResponseHandler (status, response) {
+  if (response.error) {
+    $('#error').text(response.error.message);
+    $('#error').slideDown(300);
+    $('#paymentButton').removeAttr("disabled");
+    return;
+  }
+  
+  var form = $("#payment-form");
+  form.append("<input type='hidden' name='stripeToken' value='" + response.id + "'/>");
+
+  $.post(
+    form.attr('action'),
+    form.serialize(),
+    function (status) {
+      if (status != 'ok') {
+        $('#error').text(status);
+      }
+      else {
+        $('#error').hide();
+        window.location = "/report";
+      }
+      $('#paymentButton').removeAttr("disabled");
+    }
+  );
+}
+
+// http://stripe.com/docs/tutorials/forms
+$("#payment-form").submit(function(event) {
+  $('#error').hide();
+  // disable the submit button to prevent repeated clicks
+  $('#paymentButton').attr("disabled", "disabled");
+    var expDate = $('#expDate').val();
+    expDate = expDate.split('-');
+    exp_month = expDate[1];
+    exp_year = expDate[0];
+  var amount = $('#cc-amount').val(); // amount you want to charge in cents
+  Stripe.createToken({
+    number: $('#ccInput').val(),
+    cvc: $('#cvc').val(),
+    exp_month: exp_month,
+    exp_year: exp_year
+  }, amount, stripeResponseHandler);
+
+  // prevent the form from submitting with the default action
+  return false;
+});
+</script>
+<% include include/footer %>

@@ -1,0 +1,175 @@
+<% include include/header %>
+<form action="/saving_detail" method="post">
+<div id="left-div" class="col-lg-12">
+</div>
+<div id="left-div" class="col-lg-12">
+    <h3 id="reportHeader">
+        <font color="#834ed0">Personal Information:</font>
+    </h3>
+    <div class="col-lg-4 col-md-4">
+        <label for="first">First Name:</label>
+        <input type="text" value="Peter" class="form-control" id="first" name="first">
+        <label for="last">Last Name:</label>
+        <input type="text" value="Hughes" class="form-control" id="last" name="last">
+        <label for="birth">Date of Birth:</label>
+        <input type="date" value="02/19/1990" class="form-control" id="birth" name="birth">
+    </div>
+    <br>
+    <button type="button" class="btn btn-link">+ Add</button>
+</div>
+<br>
+<br>
+<br>
+<div id="left-div" class="col-lg-12">
+    <h3 id="reportHeader">
+        <font color="#834ed0">Additional Info</font>
+    </h3>
+</div>
+<div id="left-div" class="col-lg-12">
+    <p id="questionText">Age of home: </p><br>
+    <div class="form-group">
+        <fieldset id="home_age">
+            <label class="radio-inline">
+                <input type="radio" name="home_age" required="required" value="0-15 Years" checked>0-15 Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="home_age" required="required" value="16-50 Years">16-50 Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="home_age" required="required" value="50-99 Years">50-99 Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="home_age" required="required" value="99+ Years">99+ Years
+            </label>
+        </fieldset>
+    </div>
+    <br><br>
+    <p id="questionText"> Will you have an alarm system?</p><br>
+    <div class="form-group">
+        <fieldset id="alarm_system">
+            <label class="radio-inline">
+                <input type="radio" name="alarm_system" value="Yes" required="required" checked>Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="alarm_system" value="No" required="required">No
+            </label>
+        </fieldset>
+    </div>
+    <br><br> <br>
+    <p id="questionText"> How old is your roof?</p><br>
+    <div class="form-group">
+        <fieldset id="roofless">
+            <label class="radio-inline">
+                <input type="radio" name="roofless" value="1-10 Years" required="required" checked>1-10 Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="roofless" value="10-20 Years" required="required">10-20 Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="roofless" value="20+ Years" required="required">20+ Years
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="roofless" value="Unknown" required="required">Unknown
+            </label>
+        </fieldset>
+    </div>
+    <br><br> <br>
+    <p id="questionText"> Type of roof?</p><br>
+    <div class="form-group">
+        <fieldset id="rooftype">
+            <label class="radio-inline">
+                <input type="radio" name="rooftype" value="Flat or Wood Shingle" required="required" checked>Flat or Wood Shingle
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="rooftype" value="Other" required="required">Other
+            </label>
+        </fieldset>
+    </div>
+    <br><br><br>
+    <p id="questionText"> Do you have a pool with a diving board or a slide?</p><br>
+    <div class="form-group">
+        <fieldset id="havepool">
+            <label class="radio-inline">
+                <input type="radio" name="havepool" value="Yes" required="required" checked>Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="havepool" value="No" required="required">No
+            </label>
+        </fieldset>
+    </div>
+    <br><br><br>
+    <p id="questionText"> Do you have a dog that is any of the following breeds?</p><br>
+    - Pitbul<br>
+    - Doeberman<br>
+    - German Shephard<br>
+    - Rot Weiler<br>
+    - Wold Hybrid<br><br>
+    <div class="form-group">
+        <fieldset id="dog">
+            <label class="radio-inline">
+                <input type="radio" name="dog" value="Yes" required="required" checked>Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="dog" value="No" required="required">No
+            </label>
+        </fieldset>
+    </div>
+    <br><br><br>
+    <p id="questionText"> Credit Score</p><br>
+    <div class="form-group">
+        <fieldset id="basement">
+            <label class="radio-inline">
+                <input type="radio" name="basement" value="500-699" required="required" checked>500-699
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="basement" value="700-750" required="required">700-750
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="basement" value="750+" required="required">750+
+            </label>
+        </fieldset>
+    </div>
+    <br><br>
+    <p id="questionText">Do you plan to bundle your home and auto insurance?</p><br>
+    <div class="form-group">
+        <fieldset id="bundlehome">
+            <label class="radio-inline">
+                <input type="radio" name="bundlehome" value="Yes" required="required" checked>Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="bundlehome" value="No" required="required">No
+            </label>
+        </fieldset>
+    </div>
+    <br><br>
+    <p id="questionText">Are you in a flood zone?</p><br>
+    <div class="form-group">
+        <fieldset id="flood">
+            <label class="radio-inline">
+                <input type="radio" name="flood" value="Yes" required="required" checked>Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="flood" value="No" required="required">No
+            </label>
+        </fieldset>
+    </div>
+    <br><br>
+    <p id="questionText"> Settlement Date</p><br>
+    <div class="form-group">
+        <fieldset id="settlementdate">
+            <label class="radio-inline">
+                <input type="radio" name="settlementdate" value="0-8 Days" required="required" checked>0-8 Days
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="settlementdate" value="9-30+ Days" required="required">9-30+ Days
+            </label>
+        </fieldset>
+    </div>
+    <center><button type="submit" class="btn btn-primary btn-lg">Submit</button><br><br><br></center>
+</div>
+</div>
+</div>
+</form>
+<!--
+<% include include/footer %>
+-->

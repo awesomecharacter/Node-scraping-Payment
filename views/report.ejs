@@ -1,0 +1,155 @@
+<% include include/header %>
+<div class="row">
+    <div id="left-div" class="col-lg-12">
+        <center><img src="images/houzio-logo.png" width="300px" /></center> <br><br><br>
+        <div id="testDiv">
+            <center><img id="cardIcon" src="images/leak.png" width="50px" /></center>
+            <div id="reportHeader2">
+                <center># of claims found on the property or subject:
+                <br>
+                <br>
+                <div id="line"></div>
+                <font color="red">3 items found</font></center>
+            </div>
+        </div>
+        <div id="reportHeader">
+            <center>
+                <br>
+                <p id="descriptionText">The next step is to get more details about your home. To do this legally, we
+                    need to request approval from the current owner of the property. We'll take care of this! </p>
+                <br>
+                <br>
+
+                <p>Who is the current owner (seller) of the home you are buying?</p><br>
+                <div class="form-group">
+                    <input type="email" id="sellersEmail" class="form-control" placeholder="seller's email" name="search" /><br><br>
+                </div>
+                <br>send copy of CLUE to my realtor
+
+                <br>
+                <br>
+
+                <button id="requestButton" type="button" class="btn btn-primary btn-lg">Request</button>
+            </center>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="testDiv">
+            <center><img id="cardIcon" src="images/price-tag.png" width="50px" /></center>
+            <div id="reportHeader2">
+                <center>price estimate:
+                <br>
+                <br>
+                <div id="line"></div>
+                <font color="green">$ 805</font></center>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="testDiv2">
+            <center><img id="cardIcon" src="images/bar-chart.png" width="50px" /></center>
+            <div id="reportHeader2">
+                <center>houzio insurability score:
+                <br>
+                <br>
+                <div id="line"></div>
+                <font color="dodgerblue">58</font>
+                <table id="uwAlerts" class="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px"></td>
+                            <td>Underwriting</td>
+                            <td><b>
+                                    <font color="#6666ff"> 56</font>
+                                </b></td>
+                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Pricing</td>
+                            <td><b>
+                                    <font color="#6de996">49</font>
+                                </b></td>
+                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Claim History</td>
+                            <td><b>
+                                    <font color="#e27379">93</font>
+                                </b></td>
+                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="col-lg-12">
+            <div id="canvas">
+                <canvas id="myChart" width="200" height="250"></canvas>
+            </div>
+        </div>
+        <div id="left-div" class="col-lg-12">
+            <h2>
+                <center>
+                    <font color="indianred">Underwriting Alerts</font><br>
+                </center>
+            </h2>
+            <center>
+                <table id="uwAlerts" class="table">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Previous Claims</td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Hard to Write Dog Breeds</td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Flat Roof</td>
+                        </tr>
+                        <tr>
+                            <td><img src="images/warning.png" height="15px" /></td>
+                            <td>Old Age of Roof</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+
+            type: 'polarArea',
+            data: {
+                labels: ['Pricing', 'Underwriting', 'Claims',],
+                datasets: [{
+                    label: 'Score',
+                    backgroundColor: ['rgba(0, 0, 255, 0.6)', 'rgba(12, 219, 80, 0.6)', 'rgba(219, 80, 88, 0.8)'],
+                    data: [
+                        56,
+                        49,
+                        93,
+                    ]
+                }]
+            },
+            options: {}
+
+
+        });
+    </script>
+</div></body></html>
