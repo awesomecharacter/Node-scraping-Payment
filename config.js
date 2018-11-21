@@ -7,4 +7,6 @@ module.exports = {
     stripe_publish: 'pk_test_eEErfHtzInIYEr1vnUvhWfnQ',
     stripe_secret: 'sk_test_9aTlwUqhGMB2vT4axLJ7AtGs',
     stripe_ccy: 'usd',
+    db: 'mongodb://127.0.0.1:27017/houzioq',
+    db_dev: 'mongodb://127.0.0.1:27017/houzioq',
 };

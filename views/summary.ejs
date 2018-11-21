@@ -72,7 +72,7 @@
             report cost.............$25.00<br>
             tax...........................6%<br>
             <b>total cost...............$26.50</b><br><br><Br>
-            <center><button id="paymentButton" type="submit" class="btn btn-success btn-lg">Submit
+            <center><button id="paymentButton" type="button" class="btn btn-success btn-lg">Submit
                     </button></center>
         </div>
         </form>
@@ -88,6 +88,7 @@ Stripe.setPublishableKey(publicStripeApiKey);
 function stripeResponseHandler (status, response) {
   if (response.error) {
     $('#error').text(response.error.message);
+    console.log(response.error.message);
     $('#error').slideDown(300);
     $('#paymentButton').removeAttr("disabled");
     return;
@@ -96,24 +97,11 @@ function stripeResponseHandler (status, response) {
   var form = $("#payment-form");
   form.append("<input type='hidden' name='stripeToken' value='" + response.id + "'/>");
 
-  $.post(
-    form.attr('action'),
-    form.serialize(),
-    function (status) {
-      if (status != 'ok') {
-        $('#error').text(status);
-      }
-      else {
-        $('#error').hide();
-        window.location = "/report";
-      }
-      $('#paymentButton').removeAttr("disabled");
-    }
-  );
+  form.submit();
 }
 
 // http://stripe.com/docs/tutorials/forms
-$("#payment-form").submit(function(event) {
+$("#paymentButton").on('click', function(event) {
   $('#error').hide();
   // disable the submit button to prevent repeated clicks
   $('#paymentButton').attr("disabled", "disabled");

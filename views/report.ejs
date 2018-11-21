@@ -5,11 +5,14 @@
         <div id="testDiv">
             <center><img id="cardIcon" src="images/leak.png" width="50px" /></center>
             <div id="reportHeader2">
-                <center># of claims found on the property or subject:
-                <br>
-                <br>
-                <div id="line"></div>
-                <font color="red">3 items found</font></center>
+                <center>
+                    <%= claim_count %> of claims found on the property or subject:
+                    <br>
+                    <br>
+                    <div id="line"></div>
+                    <font color="red">
+                        <%= claim_count %> items found</font>
+                </center>
             </div>
         </div>
         <div id="reportHeader">
@@ -40,10 +43,13 @@
             <center><img id="cardIcon" src="images/price-tag.png" width="50px" /></center>
             <div id="reportHeader2">
                 <center>price estimate:
-                <br>
-                <br>
-                <div id="line"></div>
-                <font color="green">$ 805</font></center>
+                    <br>
+                    <br>
+                    <div id="line"></div>
+                    <font color="green">
+                        <%= est_price%>
+                    </font>
+                </center>
             </div>
         </div>
         <br>
@@ -55,101 +61,147 @@
             <center><img id="cardIcon" src="images/bar-chart.png" width="50px" /></center>
             <div id="reportHeader2">
                 <center>houzio insurability score:
-                <br>
-                <br>
-                <div id="line"></div>
-                <font color="dodgerblue">58</font>
-                <table id="uwAlerts" class="table">
-                    <thead>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px"></td>
-                            <td>Underwriting</td>
-                            <td><b>
-                                    <font color="#6666ff"> 56</font>
-                                </b></td>
-                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Pricing</td>
-                            <td><b>
-                                    <font color="#6de996">49</font>
-                                </b></td>
-                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
-                        </tr>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Claim History</td>
-                            <td><b>
-                                    <font color="#e27379">93</font>
-                                </b></td>
-                            <td><span class="glyphicon glyphicon-info-sign"></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </center>
-            </div>
-        </div>
-        <br><br><br>
-        <div class="col-lg-12">
-            <div id="canvas">
-                <canvas id="myChart" width="200" height="250"></canvas>
-            </div>
-        </div>
-        <div id="left-div" class="col-lg-12">
-            <h2>
-                <center>
-                    <font color="indianred">Underwriting Alerts</font><br>
+                    <br>
+                    <br>
+                    <div id="line"></div>
+                    <font color="dodgerblue">58</font>
+                    <table id="uwAlerts" class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="images/warning.png" height="15px"></td>
+                                <td>Underwriting</td>
+                                <td><b>
+                                        <font color="#6666ff" id="underwriting">
+                                            <%= underwriting_score %>
+                                        </font>
+                                    </b></td>
+                                <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="images/warning.png" height="15px" /></td>
+                                <td>Pricing</td>
+                                <td><b>
+                                        <font color="#6de996" id="pricing">
+                                            <%= pricing %>
+                                        </font>
+                                    </b></td>
+                                <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                            </tr>
+                            <tr>
+                                <td><img src="images/warning.png" height="15px" /></td>
+                                <td>Claim History</td>
+                                <td><b>
+                                        <font color="#e27379" id="claim">
+                                            <%= claim_score %>
+                                        </font>
+                                    </b></td>
+                                <td><span class="glyphicon glyphicon-info-sign"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </center>
-            </h2>
-            <center>
-                <table id="uwAlerts" class="table">
-                    <thead>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Previous Claims</td>
-                        </tr>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Hard to Write Dog Breeds</td>
-                        </tr>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Flat Roof</td>
-                        </tr>
-                        <tr>
-                            <td><img src="images/warning.png" height="15px" /></td>
-                            <td>Old Age of Roof</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </center>
+            </div>
+
         </div>
-    </div>
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-
-            type: 'polarArea',
-            data: {
-                labels: ['Pricing', 'Underwriting', 'Claims',],
-                datasets: [{
-                    label: 'Score',
-                    backgroundColor: ['rgba(0, 0, 255, 0.6)', 'rgba(12, 219, 80, 0.6)', 'rgba(219, 80, 88, 0.8)'],
-                    data: [
-                        56,
-                        49,
-                        93,
-                    ]
-                }]
-            },
-            options: {}
-
-
-        });
-    </script>
-</div></body></html>
+        <div class="col-lg-12">    
+            <div id="canvas">  
+            <canvas id="myChart" width="200" height="250"></canvas>
+            </div> </div>
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+               
+            <div id="left-div" class="col-lg-12">
+                <h2><center><font color="indianred">Underwriting Alerts</font><br></h2>
+                
+                <center>
+                <table id="uwAlerts" class="table">
+                <thead>
+            
+                </thead>
+                <tbody>
+                      <tr>
+                        <td><img src="warning.png" height="15px"></td>  
+                          <td>Previous Claims</td>
+            
+                  </tr>    
+                    <tr>
+                    <td><img src="warning.png" height="15px"></td>      
+                    <td>Hard to Write Dog Breeds</td>
+            
+                  </tr>
+                  <tr>
+                    <td><img src="warning.png" height="15px"></td>    
+                    <td>Flat Roof</td>
+            
+                  </tr>
+                  <tr>
+                    <td><img src="warning.png" height="15px"></td>    
+                    <td>Old Age of Roof</td>
+            
+                  </tr>
+                </tbody>
+              </table>
+                
+                
+                </center>
+            
+            
+            
+                
+                </div>     </div>   
+               
+            
+            
+                
+                
+                
+            
+                
+                
+                
+                
+                
+                
+                
+            <script>
+                
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+               
+                type: 'polarArea',
+                data: {
+                    labels: ['Underwriting', 'Pricing', 'Claims',],
+                    datasets: [{
+                        label:'Score',
+                       backgroundColor:['rgba(0, 0, 255, 0.6)','rgba(12, 219, 80, 0.6)','rgba(219, 80, 88, 0.8)'],
+                        data:[
+                            56, 
+                            49, 
+                            93,
+                            
+                        ]
+                               
+                               }]
+                },
+                
+                options:{}
+            
+            
+            });
+                
+                
+                
+                
+            
+            </script>
+        
+<% include include/footer %>

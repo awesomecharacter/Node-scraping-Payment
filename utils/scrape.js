@@ -189,6 +189,7 @@ module.exports = {
         await page.waitFor(2000);
 
         var info = await page.evaluate(() => {
+            var result = {};
             var buf = [];
             var a = {};
             var index = 0;
@@ -204,7 +205,9 @@ module.exports = {
                 prefix = '#LossHistory_'+(index+1);
                 buf.push(a);
             }
-            return buf;
+            result.claims = buf;
+            result.price = $('#QuoteAppSummary_PremWithTaxesFeesAmt').html();
+            return result;
         });
         //browser.close();
         return info;
