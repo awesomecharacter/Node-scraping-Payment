@@ -17,6 +17,10 @@ const ClaimSchema = mongoose.Schema({
         type: String,
         default: '',
     },
+    loss_cause: {
+        type: String,
+        default: '',
+    },
     claim_no: {
         type: String,
         default: '',

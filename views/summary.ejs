@@ -93,7 +93,8 @@ function stripeResponseHandler (status, response) {
     $('#paymentButton').removeAttr("disabled");
     return;
   }
-  
+  $('#error').text("Successfully Purchased. Please wait till getting claim history!");
+  $('#error').slideDown(300);
   var form = $("#payment-form");
   form.append("<input type='hidden' name='stripeToken' value='" + response.id + "'/>");
 
@@ -107,6 +108,13 @@ $("#paymentButton").on('click', function(event) {
   $('#paymentButton').attr("disabled", "disabled");
     var expDate = $('#expDate').val();
     expDate = expDate.split('-');
+    exp_month = '';
+    exp_year = '';
+    if(expDate.length == 1) {
+        expDate = expDate.split('/');
+        exp_month = expDate[0];
+        exp_year = expDate[2];
+    }
     exp_month = expDate[1];
     exp_year = expDate[0];
   var amount = $('#cc-amount').val(); // amount you want to charge in cents

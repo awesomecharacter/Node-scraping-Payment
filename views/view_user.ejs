@@ -1,0 +1,56 @@
+<% include include/header %>
+<div class="table-responsive">
+<h3>Order History</h3>
+<table class="table table-striped datatable">
+    <thead>
+        <th>Order ID</th>
+        <th>Sent Document to Seller</th>
+        <th>Seller signed Doc</th>
+        <th>Sent to User</th>
+        <th>Order Date</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+        <% for(var i=0; i<orders.length; i++){ %>
+            <tr>
+                <td> <%= orders[i].id %>  </td>
+                <td> <%= orders[i].to_seller %> </td>
+                <td> <%= orders[i].approve %>  </td>
+                <td> <%= orders[i].sent_user %>  </td>
+                <td> <%= orders[i].order_date %>  </td>
+                <td><a href="/admin/delete_order?id=<%= orders[i]._id %>" class="btn btn-warning">Delete</a></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+</div>
+<div class="table-responsive">
+<h3>Claims History</h3>
+<table class="table table-striped datatable">
+    <thead>
+        <th>No</th>
+        <th>Loss Date</th>
+        <th>Loss Amount</th>
+        <th>Loss Cause</th>
+        <th>Claim No</th>
+        <th>Claim Status</th>
+        <th>Claim Source</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+        <% for(var i=0; i<claims.length; i++){ %>
+            <tr>
+                <td> <%= claims[i].loss_no %>  </td>
+                <td> <%= claims[i].loss_date %> </td>
+                <td> <%= claims[i].loss_amount %>  </td>
+                <td> <%= claims[i].loss_cause %>  </td>
+                <td> <%= claims[i].claim_no %>  </td>
+                <td> <%= claims[i].claim_status %>  </td>
+                <td> <%= claims[i].source %>  </td>
+                <td><a href="/admin/delete_claim?id=<%= claims[i]._id %>" class="btn btn-warning">Delete</a></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+</div>
+<% include include/footer %>

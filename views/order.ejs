@@ -5,6 +5,9 @@
     </center>
 </div>
 <div id="centeredDiv">
+    <% if (error!=''){ %>
+    <div class="err-message"><%= error %></div>
+    <% } %>
     <form action='order_detail' method="POST">
         <center>
             <div class="col-lg-12">

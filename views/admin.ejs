@@ -1,0 +1,40 @@
+<% include include/header %>
+<div class="table-responsive">
+<table class="table table-striped datatable">
+    <thead>
+        <th>No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Address</th>
+        <th>Birthday</th>
+        <th>Address</th>
+        <th>Age of Home</th>
+        <th>Having Pool</th>
+        <th>Having Dog</th>
+        <th>Roof Type</th>
+        <th>Age of Roof</th>
+        <th>View Details</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+        <% for(var i=0; i<users.length; i++){ %>
+            <tr>
+                <td> <%= users[i]._id %>  </td>
+                <td> <%= users[i].first %> </td>
+                <td> <%= users[i].last %>  </td>
+                <td> <%= users[i].email %>  </td>
+                <td> <%= users[i].birth %>  </td>
+                <td> <%= users[i].address + ', ' + users[i].city + ', ' + users[i].state + ', ' + users[i].zip %>  </td>
+                <td> <%= users[i].home_age %>  </td>
+                <td> <%= users[i].havingpool %>  </td>
+                <td> <%= users[i].dog %>  </td>
+                <td> <%= users[i].rooftype %>  </td>
+                <td> <%= users[i].roofless %>  </td>
+                <td><a href="/view_user?id=<%= users[i]._id %>" class="btn btn-warning">View</a></td>
+                <td><a href="/delete_user?id=<%= users[i]._id %>" class="btn btn-warning">Delete</a></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+</div>
+<% include include/footer %>

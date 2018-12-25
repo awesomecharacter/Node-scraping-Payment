@@ -25,10 +25,13 @@
 
                 <p>Who is the current owner (seller) of the home you are buying?</p><br>
                 <div class="form-group">
-                    <input type="email" id="sellersEmail" class="form-control" placeholder="seller's email" name="search" /><br><br>
+                    <input type="email" id="sellersEmail" class="form-control" placeholder="seller's email" name="sellersEmail" /><br><br>
                 </div>
-                <br>send copy of CLUE to my realtor
-
+                <br><a href="#" id="show_realtor">send copy of CLUE to my realtor</a>
+                <p id="realtor_label" class="hide">Realtor's Email address:</p>
+                <div class="form-group hide" id="realtor">
+                    <input type="email" name="realtorEmail" placeholder="realtor's email" class="form-control" /><br><br>
+                </div>
                 <br>
                 <br>
 
@@ -64,7 +67,7 @@
                     <br>
                     <br>
                     <div id="line"></div>
-                    <font color="dodgerblue">58</font>
+                    <font color="dodgerblue"><%= total %></font>
                     <table id="uwAlerts" class="table">
                         <thead>
                         </thead>
@@ -109,16 +112,6 @@
             <div id="canvas">  
             <canvas id="myChart" width="200" height="250"></canvas>
             </div> </div>
-                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-               
             <div id="left-div" class="col-lg-12">
                 <h2><center><font color="indianred">Underwriting Alerts</font><br></h2>
                 
@@ -128,55 +121,42 @@
             
                 </thead>
                 <tbody>
+                    <% if(warning[0]) { %>
                       <tr>
-                        <td><img src="warning.png" height="15px"></td>  
+                        <td><img src="images/warning.png" height="15px"></td>  
                           <td>Previous Claims</td>
-            
                   </tr>    
+                  <% } %>
+                  <% if(warning[1]) { %>
                     <tr>
-                    <td><img src="warning.png" height="15px"></td>      
+                    <td><img src="images/warning.png" height="15px"></td>      
                     <td>Hard to Write Dog Breeds</td>
-            
                   </tr>
+                  <% } %>
+                  <% if(warning[2]) { %>
                   <tr>
-                    <td><img src="warning.png" height="15px"></td>    
+                    <td><img src="images/warning.png" height="15px"></td>    
                     <td>Flat Roof</td>
-            
                   </tr>
+                  <% } %>
+                  <% if(warning[3]) { %>
                   <tr>
-                    <td><img src="warning.png" height="15px"></td>    
+                    <td><img src="images/warning.png" height="15px"></td>    
                     <td>Old Age of Roof</td>
-            
                   </tr>
+                  <% } %>
                 </tbody>
               </table>
-                
-                
                 </center>
-            
-            
-            
-                
                 </div>     </div>   
-               
-            
-            
-                
-                
-                
-            
-                
-                
-                
-                
-                
-                
-                
+                </div>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
             <script>
-                
+            var underwriting = document.getElementById('underwriting').innerHTML;
+            var pricing = document.getElementById('pricing').innerHTML;
+            var claim = document.getElementById('claim').innerHTML;
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
-               
                 type: 'polarArea',
                 data: {
                     labels: ['Underwriting', 'Pricing', 'Claims',],
@@ -184,24 +164,40 @@
                         label:'Score',
                        backgroundColor:['rgba(0, 0, 255, 0.6)','rgba(12, 219, 80, 0.6)','rgba(219, 80, 88, 0.8)'],
                         data:[
-                            56, 
-                            49, 
-                            93,
+                            parseInt(underwriting), 
+                            parseInt(pricing), 
+                            parseInt(claim),
                             
                         ]
-                               
-                               }]
+                    }]
                 },
-                
                 options:{}
-            
-            
             });
-                
-                
-                
-                
-            
+            $('#show_realtor').on('click', function(e) {
+                $('#realtor_label').removeClass('hide');
+                $('#realtor').removeClass('hide');
+            });
+
+            $('#requestButton').on('click', function(e) {
+                $('#requestButton').attr('disabled');
+                $.ajax({
+                    url: '/send_request',
+                    type: 'post',
+                    header: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        'seller_email': $('#sellersEmail').val(),
+                        'realtor_email': $('#realtorEmail').val()
+                    },
+                    success: function(res){
+                        alert("Successfully sent");
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
             </script>
         
 <% include include/footer %>

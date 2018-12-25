@@ -27,10 +27,11 @@ router.post('/saving_address', function (req, res, next) {
 });
 
 router.post('/saving_detail', async function (req, res, next) {
-  var { first, last, birth, home_age, alarm_system, roofless, rooftype, havepool, dog, basement, bundlehome, flood, settlementdate } = req.body;
+  var { first, last, birth, email, home_age, alarm_system, roofless, rooftype, havepool, dog, basement, bundlehome, flood, settlementdate } = req.body;
   storage.setInStorage('first', { first: first });
   storage.setInStorage('last', { last: last });
   storage.setInStorage('birth', { birth: birth });
+  storage.setInStorage('email', {email: email});
   storage.setInStorage('home_age', { home_age: home_age });
   storage.setInStorage('alarm_system', { alarm_system: alarm_system });
   storage.setInStorage('roofless', { roofless: roofless });
@@ -61,6 +62,7 @@ router.post('/saving_detail', async function (req, res, next) {
         user.first = first;
         user.last = last;
         user.birth = birth;
+        user.email = email;
         user.address = address.address;
         user.city = city.city;
         user.state = state.state;
@@ -87,19 +89,33 @@ router.post('/saving_detail', async function (req, res, next) {
   console.log(info);
 
   storage.setInStorage('claims', { claims: info });
+  console.log("1");
   var user = storage.getFromStorage('user');
   info.claims.forEach(element => {
-    var claim = new Claim();
-    claim.no = element.losshistory_no;
-    claim.loss_date = element.losshistory_date;
-    claim.loss_amount = element.losshistory_amount;
-    claim.loss_cause = element.losshistory_cause;
-    claim.claim_no = element.claim_no;
-    claim.claim_status = element.claim_status;
-    claim.source = element.source_cd;
-    claim.user_id = user.id;
-    claim.save();
+    Claim.find({
+      no: element.losshistory_no,
+      loss_date: element.losshistory_date,
+      loss_amount: element.losshistory_amount
+    }, function(err, claim){
+      if(err){
+        console.log(err);
+        res.render('error');
+      }
+      if(claim.length == 0){
+        var claim = new Claim();
+        claim.no = element.losshistory_no;
+        claim.loss_date = element.losshistory_date;
+        claim.loss_amount = element.losshistory_amount;
+        claim.loss_cause = element.losshistory_cause;
+        claim.claim_no = element.claim_no;
+        claim.claim_status = element.claim_status;
+        claim.source = element.source_cd;
+        claim.user_id = user.id;
+        claim.save();
+      }
+    });
   });
+  console.log("2");
   res.render('summary', {
     name: name,
     address: address.address + ', ' + city.city + ', ' + state.state + ', ' + zip.zip,
@@ -194,14 +210,15 @@ router.post('/checkout', function (req, res, next) {
     order.user_id = user.id;
     order.save();
     // send mail to users which containing order number
+    var email = storage.getFromStorage('email');
     const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey('key');
+    sgMail.setApiKey('#');
     const msg = {
-      to: 'wdeveloper093@gmail.com',
-      from: 'wdeveloper093@gmail.coom',
-      subject: 'Verification Code from Houzioq',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: 'Order Id is <br/><strong>' + req.body.stripeToken + '</strong>',
+      to: email.email,
+      from: 'service@houzioq.com',
+      subject: 'Order No from Houzioq',
+      text: 'Order No from Houzioq',
+      html: 'Order No is <br/><strong>' + req.body.stripeToken + '</strong>',
     };
     sgMail.send(msg);
 
@@ -217,50 +234,111 @@ router.post('/checkout', function (req, res, next) {
   });
 });
 
-router.get('/report', function (req, res, next) {
-  res.render('report');
+
+router.get('/order', function (req, res, next) {
+  res.render('order', {
+    'error': ''
+  });
 });
 
-router.get('/summary', function (req, res, next) {
-  res.render('summary');
-});
-
-router.get('/order', function(req, res, next) {
-  res.render('order');
-});
-
-router.post('/order_detail', function(req, res, next) {
+router.post('/order_detail', function (req, res, next) {
   const { order_no } = req.body;
   var ord, user_info, claims;
   console.log(order_no);
-  Order.find({id: order_no}, (err, order) => {
+  Order.find({ id: order_no }, (err, order) => {
+    if (err) {
+      console.log(err);
+      res.render('error');
+    }
+    if (order.length > 0) {
+      ord = order[0];
+      User.find({ _id: ord.user_id }, (err, user) => {
+        if (err) {
+          console.log(err);
+          res.render('error');
+        }
+        user_info = user[0];
+        Claim.find({ user_id: ord.user_id }, (err, claim) => {
+          if (err) {
+            console.log(err);
+            res.render('error');
+          }
+          console.log(claim);
+          console.log(user_info);
+          console.log(ord);
+          res.render('order_detail', {
+            'order': ord,
+            'user': user_info,
+            'claims': claim
+          });
+        })
+      })
+    }
+    else {
+      res.render('order', {
+        'error': "Order Number is invalid",
+      });
+    }
+  });
+});
+
+router.post('/send_request', function(req, res) {
+  var {sender_email, realtor_email} = req.body;
+  console.log(sender_email);
+  res.send({
+    'success': 'success'
+  });
+})
+
+router.get('/view_user', function(req, res) {
+  var id = req.query.id;
+  console.log(id);
+  Claim.find({user_id: id}, function(err, claims) {
+    if(err) {
+      console.log(err);
+      res.render('error');
+    }
+    if(claims.length > 0) {
+      Order.find({_id: id}, function(err, orders){
+        if(err){
+          console.log(err);
+          res.render('error');
+        }
+        if(orders.length > 0) {
+          res.render('view_user', {
+            'claims': claims,
+            'orders': orders
+          });
+        }
+      });
+    }
+  });
+});
+
+router.get('/admin', function(req, res) {
+  User.find({}, function(err, user) {
     if(err){
       console.log(err);
       res.render('error');
     }
-    ord = order[0];
-    User.find({_id: ord.user_id}, (err, user) => {
-      if(err){
-        console.log(err);
-        res.render('error');
-      }
-      user_info = user[0];
-      Claim.find({user_id: ord.user_id}, (err, claim) => {
-        if(err) {
-          console.log(err);
-          res.render('error');
-        }
-        claims = claim[0];
+    if(user.length > 0) {
+      res.render('admin', {
+        'users': user
+      });
+    }
+  })
+})
 
-        res.render('order_detail', {
-          'order': ord,
-          'user': user_info,
-          'claim': claims
-        });
-      })
-    })
-  });
+
+
+router.get('/admin/delete', function(req, res) {
+  var {id} = req.body;
+  User.findByIdAndDelete({_id: id});
+  Claim.findByIdAndDelete({user_id: id});
+  Order.findByIdAndDelete({user_id: id});
+  res.redirect('/admin');
 });
+
 
 router.get('/pdf', function (req, res) {
   var doc = new PDFDocument({ size: [1200, 1450] });
@@ -272,7 +350,7 @@ router.get('/pdf', function (req, res) {
   res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"')
   res.setHeader('Content-type', 'application/pdf')
 
-  doc.image('/Volumes/Work/Work/2018.11.2(Node js scraping)/Node+html/first/public/images/pdf-logo.png', 430, 100);
+  doc.image('path/pdf-logo.png', 430, 100);
   doc.fontSize(28).text("HOMEOWNER INFORMATION SHARING AGREEMENT", 250, 300);
   doc.fontSize(22).text("I, _________________________ own property _________________________________ .", 150, 450);
   doc.fontSize(22).text("I, _________________________ own property _________________________________ .", 150, 550);

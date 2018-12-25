@@ -245,7 +245,6 @@
 
 #footer{
   height: 150px;
-  position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
@@ -270,6 +269,15 @@
     
 }    
 
+.err-message {
+    background-color: #f2838f;
+    border: #ed5565;
+    color: #a94442;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
 
-
+.hide {
+    display: none;
 }

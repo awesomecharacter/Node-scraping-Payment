@@ -5,20 +5,20 @@
     </center>
 </div>
 <div id="centeredDiv">
-    <h1>order # euv201812412 </h1><br>
-    order date: 09/23/2018 <br>
-    Amount paid: $26.50<br><br>
+    <h1>order # <%= order.id %> </h1><br>
+    order date: <%= order.order_date%> <br>
+    Amount paid: $49.99<br><br>
 </div>
 <div id="centeredDiv">
     <h3>details:</h3>
     <table class="table" id="summary-table">
         <tr>
             <td><b>Address : </b></td>
-            <td> 303 Dean St, West Chester, PA,19382<br></td>
+            <td><%= user.address + user.state + user.zip %><br></td>
         </tr>
         <tr>
             <td><b>person 1: </b></td>
-            <td> John Smith, 10/20/1967<br></td>
+            <td><%= user.first + user.last + ',' + user.birth %><br></td>
         </tr>
         <tr>
             <td><b>person 2: </b></td>
@@ -26,39 +26,39 @@
         </tr>
         <tr>
             <td><b>age of home : </b></td>
-            <td> 0-50 years<br></td>
+            <td><%= user.home_age %><br></td>
         </tr>
         <tr>
             <td><b>age of roof: </b></td>
-            <td> 0-10 years<br></td>
+            <td><%= user.roofless %><br></td>
         </tr>
         <tr>
             <td><b>roof : </b></td>
-            <td> flat<br></td>
+            <td><%= user.rooftype %><br></td>
         </tr>
         <tr>
             <td><b>alarm system: </b></td>
-            <td> yes<br></td>
+            <td><%= user.alarm_system %><br></td>
         </tr>
         <tr>
             <td><b>dog breed: </b></td>
-            <td> none<br></td>
+            <td><%= user.dog %><br></td>
         </tr>
         <tr>
             <td><b>flood zone: </b></td>
-            <td> no<br></td>
+            <td><%= user.flood %><br></td>
         </tr>
         <tr>
             <td><b>bundle: </b></td>
-            <td> yes<br></td>
+            <td><%= user.bundlehome %><br></td>
         </tr>
         <tr>
             <td><b>settlement date: </b></td>
-            <td> 0-9 days<br></td>
+            <td><%= user.settlementdate %><br></td>
         </tr>
         <tr>
             <td><b>credit score: </b></td>
-            <td> 725 - 850<br></td>
+            <td><%= user.basement %><br></td>
         </tr>
     </table>
 </div>
@@ -74,18 +74,18 @@
             </td>
             <td>request sent to seller </td>
             <td><i>
-                    <font color="green"> 9/26/2018</font>
+                    <font color="green"><%= order.to_seller %></font>
                 </i></td>
         </tr>
         <tr>
             <td></td>
             <td>seller approved request</td>
-            <td><i> pending</i></td>
+            <td><i><%= order.approve %></i></td>
         </tr>
         <tr>
             <td></td>
             <td>report sent to <i>user's email</i> </td>
-            <td><i> pending</i></td>
+            <td><i><%= order.sent_user %></i></td>
         </tr>
 
     </table>
@@ -96,13 +96,15 @@
     </h3>
     </font>
     <table class="table">
+        <% for(var i=0; i<claims.length; i++) { %>
         <tr>
-            <td>04/12/2013 </td>
+            <td><%= claims[i].loss_date %></td>
             <td><i>
-                    <font color="red"> Fire</font>
+                    <font color="red"><%= claims[i].loss_cause %></font>
                 </i></td>
-            <td>$32,002 </td>
+            <td><%= claims[i].loss_amount %></td>
         </tr>
+        <% } %>
     </table>
 </div>
 </div>

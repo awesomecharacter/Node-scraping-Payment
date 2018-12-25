@@ -4,9 +4,9 @@ const date = require('date-and-time');
 module.exports = {
     run: async function(address, city, state, zip, detail) {
         var {first, last, birth, home_age, alarm_system, roofless, rooftype, havepool, dog, basement, bundlehome, flood, settlementdate} = detail;
-        const browser = await puppeteer.launch({
-            headless: false,
-        });
+        const browser = await puppeteer.launch(
+            {args: ['--no-sandbox', '--disable-setuid-sandbox']}
+        );
         const page = await browser.newPage();
 
         await page.goto('https://thekey.contributionship.com/');
@@ -14,7 +14,7 @@ module.exports = {
         const USERNAME_SELECTOR = '#j_username';
         const PASSWORD_SELECTOR = '#j_password';
         const BUTTON_SELECTOR = '#SignIn';
-        await page.waitFor(15000);
+        await page.waitFor(5000);
         await page.click(USERNAME_SELECTOR);
         await page.keyboard.type('peterhughes');
 
@@ -27,7 +27,7 @@ module.exports = {
         console.log("login passed");
         //----------------Getting into pages-------------------//
         await page.click('#NewQuote');
-        await page.waitFor(4000);
+        await page.waitFor(2000);
         await page.click('#ProductSelection input');
         var today = new Date();
         var dd = today.getDate();
@@ -47,12 +47,12 @@ module.exports = {
         await page.keyboard.type(today);
         await page.select('#ProductSelection select', 'PA');
         await page.click("#Continue");
-        await page.waitFor(5000);
+        await page.waitFor(2000);
         await page.click('#ProductSelectionList a');
 
         await page.waitForNavigation();
 
-        await page.waitFor(5000);
+        await page.waitFor(3000);
 
         console.log("second page passed");
         await page.select('#Question_VacantOccupied', 'NO');
@@ -78,21 +78,22 @@ module.exports = {
         await page.click('#NextPage');
         await page.waitForNavigation();
 
-        await page.waitFor(5000);
+        await page.waitFor(3000);
         console.log("third page passed");
 
         await page.evaluate(() => {
             $('#PolicyGeneral select:eq(0) option:eq(2)').prop('selected', true);
             return;
         });
-        await page.waitFor(4000);
+        await page.waitFor(2000);
         await page.evaluate(() => {
             $('#PolicyGeneral select:eq(2) option:eq(1)').prop('selected', true);
             $('#InsuredInformation select:eq(0) option:eq(1)').prop('selected', true);
-            cmmXForm('UWInsuredEntitySelect', 1749667);
+            $('#Insured\\.EntityTypeCd select:eq(0) option:eq(1)').prop('selected', true);
+            $('#Insured\\.EntityTypeCd').trigger('onchange');
         });
         await page.waitForNavigation();
-        await page.waitFor(5000);
+        await page.waitFor(3000);
 
         var firstname = first;
         var lastname = last;
@@ -109,12 +110,14 @@ module.exports = {
             $('#InsuredInformation select:eq(8) option:eq(1)').prop('selected', true);
             $('#InsuredInformation select:eq(10) option:eq(2)').prop('selected', true);
         });
-        /*await page.click('#InsuredName\\.GivenName');
+        await page.click('#InsuredName\\.GivenName', {clickCount: 3});
         await page.keyboard.type(firstname);
-        await page.click('#InsuredName\\.Surname');
+        await page.click('#InsuredName\\.Surname', {clickCount: 3});
         await page.keyboard.type(lastname);
-        await page.click('#ResetCommercialName');*/
+        await page.click('#ResetCommercialName');
         await page.click('#InsuredPersonal\\.BirthDt');
+        var buf = birthday.split('-');
+        birthday = buf[1] + '/' + buf[2] + '/' + buf[0];
         await page.keyboard.type(birthday);
         await page.click('#InsuredResidentAddr\\.Addr1');
         await page.keyboard.type(user_address.address);
@@ -130,7 +133,9 @@ module.exports = {
             toggleCheckBox('Building.NoPriorAddressInd');
             $('#InsuredInformation input[type=text]:eq(19)').val("none");
             $('#InsuredInformation img:eq(1)').click();
+            InsuredResidentAddr.verify();
             $('#DefaultAddress').click();
+            InsuredMailingAddr.verify();
             $('#InsuredInformation img:eq(2)').click();
             $('#LaunchMSBRCT').click();
         });
@@ -142,7 +147,7 @@ module.exports = {
         })
         await page.click('#LaunchMSBRCT');
 
-        await page.waitFor(15000);
+        await page.waitFor(10000);
         console.log("redirect to another page passed");
 
         var pages = await browser.pages();
@@ -150,6 +155,7 @@ module.exports = {
         console.log(pages.map(page => page.url()));
         await pages[2].close();
 
+        await page.waitFor(4000);
         console.log("closing other tab passed");
         await page.evaluate(() => {
             $('#HomeownersGeneral select:eq(0) option:eq(3)').prop('selected', true);
@@ -182,11 +188,8 @@ module.exports = {
         await page.waitForNavigation();
         await page.waitFor(2000);
 
-        await page.click('#NextPage');
-        await page.waitForNavigation();
-
         await page.click('#Wizard_LossHistory');
-        await page.waitFor(2000);
+        await page.waitFor(4000);
 
         var info = await page.evaluate(() => {
             var result = {};
@@ -209,7 +212,7 @@ module.exports = {
             result.price = $('#QuoteAppSummary_PremWithTaxesFeesAmt').html();
             return result;
         });
-        //browser.close();
+        browser.close();
         return info;
     }
 }
